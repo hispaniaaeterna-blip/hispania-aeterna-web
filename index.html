@@ -20,7 +20,7 @@
                 }
             }
         }
-    </script>
+    <</script>
     <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Ethers.js para Web3 -->
@@ -42,7 +42,7 @@
 </head>
 <body class="bg-haeDark text-slate-100 font-sans antialiased selection:bg-haeGold selection:text-haeDark">
 
-    <!-- HEADER / NAVEGACIÓN FIJA -->
+    <!-- BARRA SUPERIOR DE NAVEGACIÓN -->
     <header class="sticky top-0 z-50 bg-haeDark/95 backdrop-blur-md border-b border-haeBorder">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
@@ -55,17 +55,20 @@
                 </div>
             </div>
             
+            <!-- Botones solicitados en orden -->
             <nav class="hidden xl:flex items-center space-x-5 text-sm font-medium text-slate-300">
+                <a href="#preventa" class="text-haeGold font-bold hover:opacity-80 transition">Preventa</a>
                 <a href="#inicio" class="hover:text-haeGold transition">Inicio</a>
                 <a href="#proyecto" class="hover:text-haeGold transition">Proyecto</a>
                 <a href="#token" class="hover:text-haeGold transition">Token</a>
                 <a href="#tokenomics" class="hover:text-haeGold transition">Tokenomics</a>
                 <a href="#ecosistema" class="hover:text-haeGold transition">Ecosistema</a>
                 <a href="#comercios" class="hover:text-haeGold transition">Comercios</a>
-                <a href="#business" class="hover:text-haeGold transition">HAE Business</a>
+                <a href="#hae-business" class="hover:text-haeGold transition">HAE Business</a>
                 <a href="#membresia" class="hover:text-haeGold transition">Membresía</a>
-                <a href="#preventa" class="hover:text-haeGold transition text-haeGold font-bold">Preventa & Staking</a>
+                <a href="#staking" class="hover:text-haeGold transition">Staking</a>
                 <a href="#comunidad" class="hover:text-haeGold transition">Comunidad</a>
+                <a href="#dashboard" class="hover:text-haeGold transition">Billetera</a>
             </nav>
 
             <div class="flex items-center space-x-3">
@@ -76,10 +79,83 @@
         </div>
     </header>
 
-    <main class="space-y-20 pb-20">
+    <main class="space-y-24 pb-24">
 
-        <!-- 1. PÁGINA DE INICIO (Imagen 1) -->
-        <section id="inicio" class="relative pt-16 pb-24 px-4 overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-haeDark to-haeDark border-b border-haeBorder">
+        <!-- 9. SECCIÓN DE PREVENTA (PRIMERA SECCIÓN SOLICITADA) -->
+        <section id="preventa" class="max-w-7xl mx-auto px-4 pt-12 space-y-12">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🚀 Fase Inicial de Adquisición</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Preventa Privada & Lista Blanca</h2>
+                <p class="text-slate-400">Participa conectando tu billetera Web3. El precio aumenta automáticamente al completarse cada etapa.</p>
+            </div>
+
+            <!-- Tarjetas de las 5 Etapas con Progreso en vivo -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="etapasContainer"></div>
+
+            <!-- Panel de Compra y Calculadora -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-haeCard p-6 sm:p-10 rounded-3xl border border-haeGold/30 shadow-2xl">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-black text-white">Calculadora de Tokens $HAE</h3>
+                        <p class="text-xs text-slate-400 mt-1">Límite por billetera: $10 USD a $5,000 USD.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">Selecciona la Etapa de Preventa</label>
+                            <select id="selectedStage" onchange="actualizarCalculadora()" class="w-full bg-slate-900 border border-haeBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-haeGold">
+                                <option value="1">Etapa 1 - $0.005 USD (Meta: $30k)</option>
+                                <option value="2">Etapa 2 - $0.008 USD (Meta: $40k)</option>
+                                <option value="3">Etapa 3 - $0.012 USD (Meta: $30k)</option>
+                                <option value="4">Etapa 4 - $0.018 USD (Meta: $28k)</option>
+                                <option value="5">Etapa 5 - $0.025 USD (Meta: $25k)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-2">Monto a Invertir (USD)</label>
+                            <input type="number" id="invertInput" min="10" max="5000" value="100" oninput="actualizarCalculadora()" class="w-full bg-slate-900 border border-haeBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-haeGold">
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder space-y-1">
+                            <span class="text-xs text-slate-400 uppercase font-semibold">Tokens $HAE que recibirás:</span>
+                            <div id="tokensCalculadosResult" class="text-3xl font-black text-haeGold">20,000.00 HAE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-haeBorder pt-6 lg:pt-0 lg:pl-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Ejecutar Compra Inmediata</h3>
+                        <p class="text-xs text-slate-400">Selecciona criptomoneda de pago para transferir a las billeteras oficiales del proyecto.</p>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <button onclick="seleccionarMonedaPago('SOL')" id="btnSOL" class="p-3 rounded-xl bg-slate-900 border-2 border-haeGold text-center font-bold text-xs text-white transition">
+                                <i class="fa-solid fa-coins text-haeGold mb-1 block text-lg"></i> SOLANA
+                            </button>
+                            <button onclick="seleccionarMonedaPago('ETH')" id="btnETH" class="p-3 rounded-xl bg-slate-900 border-2 border-haeBorder text-center font-bold text-xs text-slate-400 transition">
+                                <i class="fa-brands fa-ethereum text-haeGold mb-1 block text-lg"></i> ETHEREUM
+                            </button>
+                            <button onclick="seleccionarMonedaPago('BNB')" id="btnBNB" class="p-3 rounded-xl bg-slate-900 border-2 border-haeBorder text-center font-bold text-xs text-slate-400 transition">
+                                <i class="fa-solid fa-cube text-haeGold mb-1 block text-lg"></i> BNB CHAIN
+                            </button>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-slate-900/80 border border-haeBorder text-xs space-y-2">
+                            <div class="flex justify-between"><span class="text-slate-400">Billetera de Destino:</span> <span id="walletDestinoLabel" class="font-mono text-haeGold text-[11px]">6xtGMjEB6amj9skvBtBTRTdCnyAidcefWeFneAHX7NX8</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Tu Wallet Conectada:</span> <span id="userConnectedWallet" class="font-mono text-slate-300 text-[11px]">No conectada</span></div>
+                        </div>
+                    </div>
+
+                    <button onclick="procesarCompraPresale()" class="w-full py-4 rounded-xl bg-gradient-to-r from-haeGoldDark to-haeGold text-haeDark font-extrabold hover:opacity-95 transition shadow-lg shadow-haeGold/20 text-sm tracking-wide">
+                        Confirmar y Comprar $HAE Ahora ⚔️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. PÁGINA DE INICIO (IMAGEN 1) -->
+        <section id="inicio" class="relative py-20 px-4 overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-haeDark to-haeDark border-b border-haeBorder">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6 text-left">
                     <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-haeGold/10 border border-haeGold/30 text-haeGold text-xs font-bold tracking-wide">
@@ -99,146 +175,467 @@
                             <i class="fa-solid fa-play text-haeGold"></i> <span>Ver video</span>
                         </a>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800 text-center">
-                        <div class="p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><div class="text-xs text-slate-300 font-bold">Pagos globales</div></div>
-                        <div class="p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><div class="text-xs text-slate-300 font-bold">Comercio sin fronteras</div></div>
-                        <div class="p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><div class="text-xs text-slate-300 font-bold">Comunidad hispana</div></div>
-                        <div class="p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><div class="text-xs text-slate-300 font-bold">Legado Inmortal</div></div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800">
+                        <div class="text-center p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><i class="fa-solid fa-globe text-haeGold mb-1"></i><div class="text-[11px] text-slate-400">Pagos globales</div></div>
+                        <div class="text-center p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><i class="fa-solid fa-bolt text-haeGold mb-1"></i><div class="text-[11px] text-slate-400">Comercio sin fronteras</div></div>
+                        <div class="text-center p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><i class="fa-solid fa-users text-haeGold mb-1"></i><div class="text-[11px] text-slate-400">Comunidad hispana</div></div>
+                        <div class="text-center p-3 rounded-xl bg-haeCard/60 border border-haeBorder"><i class="fa-solid fa-infinity text-haeGold mb-1"></i><div class="text-[11px] text-slate-400">Legado Inmortal</div></div>
                     </div>
-                    <div class="pt-4 flex flex-wrap items-center gap-3 text-xs text-slate-400">
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇪🇸 España</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇲🇽 México</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇦🇷 Argentina</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇨🇴 Colombia</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇨🇱 Chile</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇵🇪 Perú</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇺🇸 EE.UU.</span>
-                        <span class="px-2 py-1 bg-slate-800 rounded">🇵🇭 Filipinas</span>
+                    <div class="flex flex-wrap items-center gap-3 pt-4 text-xs text-slate-400">
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇪🇸 España</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇲🇽 México</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇦🇷 Argentina</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇨🇴 Colombia</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇨🇱 Chile</span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700">🇵🇪 Perú</span>
                         <span class="text-haeGold font-bold">+600 millones de hispanohablantes</span>
                     </div>
                 </div>
-                <!-- Imagen con Zoom y Rotación 3D -->
+                <div class="space-y-6">
+                    <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder shadow-2xl space-y-4">
+                        <h3 class="text-2xl font-black text-white">Una historia, un futuro</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Inspirados en el Real de a Ocho, hoy construimos un activo digital para unir lo mejor de nuestra cultura y nuestra gente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SOBRE EL PROYECTO (IMAGEN 2) -->
+        <section id="proyecto" class="max-w-6xl mx-auto px-4 space-y-12">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🏛️ Nuestra Identidad</span>
+                <h2 class="text-3xl sm:text-4xl font-black">El Proyecto</h2>
+                <p class="text-slate-400">Nuestra historia, misión y visión.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-2"><i class="fa-solid fa-book-atlas text-haeGold text-xl"></i><h4 class="font-bold text-white">Historia</h4><p class="text-xs text-slate-400">Raíces compartidas</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-2"><i class="fa-solid fa-bullseye text-haeGold text-xl"></i><h4 class="font-bold text-white">Misión</h4><p class="text-xs text-slate-400">Activo soberano</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-2"><i class="fa-solid fa-eye text-haeGold text-xl"></i><h4 class="font-bold text-white">Visión</h4><p class="text-xs text-slate-400">Vanguardia económica</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-2"><i class="fa-solid fa-handshake-angle text-haeGold text-xl"></i><h4 class="font-bold text-white">Valores</h4><p class="text-xs text-slate-400">Hermandad y libertad</p></div>
+            </div>
+
+            <div class="bg-haeCard p-8 sm:p-10 rounded-3xl border border-haeBorder space-y-6 text-slate-300 leading-relaxed shadow-xl">
+                <h3 class="text-xl font-bold text-haeGold">¿Por qué una criptomoneda hispana?</h3>
+                <p>
+                    A lo largo de los siglos, el mundo hispano forjó la primera gran globalización de la historia humana. Desde las costas de México hasta la Patagonia en Chile, pasando por las plazas de Ceuta y Melilla en África, el corazón de Europa y los archipiélagos de las Filipinas, compartimos una misma lengua, una cultura inmensa, un mestizaje civilizatorio y una hermandad inquebrantable.
+                </p>
+                <p>
+                    Sin embargo, en el siglo XXI, el mundo digital nos ha encontrado fragmentados financieramente. Las fronteras monetarias y las devaluaciones locales golpean constantemente a nuestra gente.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. SOBRE EL TOKEN $HAE (IMAGEN 3) -->
+        <section id="token" class="max-w-6xl mx-auto px-4 space-y-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="space-y-6">
+                    <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🪙 Activo Soberano</span>
+                    <h2 class="text-3xl sm:text-4xl font-black">Token HAE</h2>
+                    <p class="text-slate-300 leading-relaxed">
+                        Hispania Aeterna ($HAE) nace para romper esas barreras. Así como el Real de a Ocho unió el comercio del planeta entero en el pasado, hoy creamos un activo financiero soberano, descentralizado y global que une a más de 600 millones de hispanohablantes bajo una misma bandera de prosperidad, tecnología y libertad financiera. Es hora de que la Hispanidad deje de ser solo una memoria gloriosa y se convierta en la vanguardia económica del futuro.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-xl bg-haeCard border border-haeBorder"><span class="text-slate-400 block text-xs">Nombre:</span> <strong class="text-white">Hispania Aeterna</strong></div>
+                        <div class="p-4 rounded-xl bg-haeCard border border-haeBorder"><span class="text-slate-400 block text-xs">Símbolo:</span> <strong class="text-haeGold">$HAE</strong></div>
+                        <div class="p-4 rounded-xl bg-haeCard border border-haeBorder"><span class="text-slate-400 block text-xs">Blockchain:</span> <strong class="text-white">Solana / Polygon / Arbitrum</strong></div>
+                        <div class="p-4 rounded-xl bg-haeCard border border-haeBorder"><span class="text-slate-400 block text-xs">Suministro Total:</span> <strong class="text-white">1,000,000,000</strong></div>
+                    </div>
+                </div>
+                <!-- Moneda Dorada Interactiva -->
                 <div class="flex justify-center">
-                    <div class="relative w-72 h-72 sm:w-[400px] sm:h-[400px] rounded-full p-2.5 bg-gradient-to-tr from-haeGoldDark via-haeGold to-yellow-200 shadow-2xl shadow-haeGold/30 flex items-center justify-center">
+                    <div class="relative w-72 h-72 sm:w-96 sm:h-96 rounded-full p-2.5 bg-gradient-to-tr from-haeGoldDark via-haeGold to-yellow-200 shadow-2xl shadow-haeGold/30 flex items-center justify-center">
                         <div class="w-full h-full rounded-full overflow-hidden border-4 border-haeGold shadow-inner bg-black flex items-center justify-center">
-                            <img src="token-hae.jpg" onerror="this.src='https://i.imgur.com/83p1qKo.png'" alt="Hispania Aeterna Official Coin" class="coin-interactive w-full h-full object-cover" onclick="abrirModalZoom(this.src)" title="Haz clic para ampliar la moneda">
+                            <img src="token-hae.jpg" onerror="this.src='https://i.imgur.com/83p1qKo.png'" alt="HAE Coin" class="coin-interactive w-full h-full object-cover" onclick="abrirModalZoom(this.src)">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. SOBRE EL PROYECTO (Imagen 2) -->
-        <section id="proyecto" class="max-w-7xl mx-auto px-4 space-y-12">
-            <div class="text-center max-w-3xl mx-auto space-y-3">
-                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🏛️ Nuestra Esencia</span>
-                <h2 class="text-3xl sm:text-4xl font-black">El Proyecto</h2>
-                <p class="text-slate-400">Nuestra historia, misión y visión para unificar comercialmente la Hispanidad.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-3">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-haeGold/10 flex items-center justify-center text-haeGold text-xl"><i class="fa-solid fa-book-atlas"></i></div>
-                    <h3 class="font-bold text-lg">Historia</h3>
-                    <p class="text-sm text-slate-400">Raíces compartidas a lo largo de cuatro continentes.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-3">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-haeGold/10 flex items-center justify-center text-haeGold text-xl"><i class="fa-solid fa-bullseye"></i></div>
-                    <h3 class="font-bold text-lg">Misión</h3>
-                    <p class="text-sm text-slate-400">Crear un activo financiero soberano y descentralizado.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-3">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-haeGold/10 flex items-center justify-center text-haeGold text-xl"><i class="fa-solid fa-eye"></i></div>
-                    <h3 class="font-bold text-lg">Visión</h3>
-                    <p class="text-sm text-slate-400">Ser la vanguardia económica digital del mundo hispano.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder text-center space-y-3">
-                    <div class="w-12 h-12 mx-auto rounded-full bg-haeGold/10 flex items-center justify-center text-haeGold text-xl"><i class="fa-solid fa-handshake-angle"></i></div>
-                    <h3 class="font-bold text-lg">Valores</h3>
-                    <p class="text-sm text-slate-400">Hermandad, transparencia, libertad y prosperidad.</p>
-                </div>
+        <!-- 4. TOKENOMICS (IMAGEN 4) - 60% Comunidad + Tax 6% -->
+        <section id="tokenomics" class="max-w-6xl mx-auto px-4 space-y-12">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">📊 Economía y Distribución</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Tokenomics</h2>
+                <p class="text-slate-400">Distribución optimizada: 60% Comunidad y Tax Operativo del 6%.</p>
             </div>
 
-            <!-- ¿Por qué una criptomoneda hispana? -->
-            <div class="bg-haeCard p-8 rounded-3xl border border-haeBorder space-y-6">
-                <h3 class="text-2xl font-bold text-haeGold">¿Por qué una criptomoneda hispana?</h3>
-                <p class="text-slate-300 leading-relaxed">
-                    Así como el Real de a Ocho unió el comercio mundial en el pasado, $HAE busca ser el puente financiero de una nueva era.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 text-center">
-                    <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><div class="font-bold text-haeGold text-lg">América</div><div class="text-sm text-slate-400">+500 millones</div></div>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><div class="font-bold text-haeGold text-lg">África</div><div class="text-sm text-slate-400">+50 millones</div></div>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><div class="font-bold text-haeGold text-lg">Asia</div><div class="text-sm text-slate-400">+100 millones</div></div>
-                </div>
-            </div>
-
-            <!-- Nuestro Equipo y Hoja de Ruta -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-haeCard p-8 rounded-3xl border border-haeBorder space-y-6">
-                    <h3 class="text-xl font-bold">Nuestro equipo</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div class="space-y-2"><div class="w-14 h-14 mx-auto rounded-full bg-slate-800 border border-haeGold flex items-center justify-center font-bold text-haeGold">CEO</div><div class="text-xs font-bold">Fundador y CEO</div></div>
-                        <div class="space-y-2"><div class="w-14 h-14 mx-auto rounded-full bg-slate-800 border border-haeGold flex items-center justify-center font-bold text-haeGold">CTO</div><div class="text-xs font-bold">CTO</div></div>
-                        <div class="space-y-2"><div class="w-14 h-14 mx-auto rounded-full bg-slate-800 border border-haeGold flex items-center justify-center font-bold text-haeGold">CMO</div><div class="text-xs font-bold">CMO</div></div>
-                        <div class="space-y-2"><div class="w-14 h-14 mx-auto rounded-full bg-slate-800 border border-haeGold flex items-center justify-center font-bold text-haeGold">LEG</div><div class="text-xs font-bold">Asesor Legal</div></div>
+                <!-- Distribución General (60% Comunidad, rest calc) -->
+                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6">
+                    <h3 class="text-xl font-bold text-white">Asignación del Suministro (Total: 1B)</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-haeGold"></span><span>Comunidad</span></span> <strong class="text-haeGold">60%</strong></div>
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-blue-500"></span><span>Tesorería</span></span> <strong class="text-white">15%</strong></div>
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-purple-500"></span><span>Desarrollo</span></span> <strong class="text-white">10%</strong></div>
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-green-500"></span><span>Equipo</span></span> <strong class="text-white">8%</strong></div>
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-pink-500"></span><span>Marketing</span></span> <strong class="text-white">4%</strong></div>
+                        <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-amber-500"></span><span>Liquidez</span></span> <strong class="text-white">3%</strong></div>
                     </div>
                 </div>
-                <div class="bg-haeCard p-8 rounded-3xl border border-haeBorder space-y-6">
-                    <h3 class="text-xl font-bold">Hoja de ruta</h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                        <div class="p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="text-haeGold font-bold">1. Validación</span><p class="text-[11px] text-slate-400 mt-1">0-3 meses</p></div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="text-haeGold font-bold">2. MVP</span><p class="text-[11px] text-slate-400 mt-1">3-6 meses</p></div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="text-haeGold font-bold">3. Crecimiento</span><p class="text-[11px] text-slate-400 mt-1">6-12 meses</p></div>
-                        <div class="p-3 rounded-xl bg-slate-900 border border-haeBorder"><span class="text-haeGold font-bold">4. Expansión</span><p class="text-[11px] text-slate-400 mt-1">12+ meses</p></div>
+
+                <!-- Tax de Transacciones (6%) -->
+                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-white">Tax de Transacciones (6%)</h3>
+                        <p class="text-xs text-slate-400">Estructura sostenible para mantenimiento y recompensas automáticas:</p>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Equipo Fundador</span> <strong class="text-haeGold">2%</strong></div>
+                            <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Marketing Global</span> <strong class="text-haeGold">1%</strong></div>
+                            <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Rewards (Recompensas)</span> <strong class="text-haeGold">1%</strong></div>
+                            <div class="flex justify-between p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Liquidez Automatizada</span> <strong class="text-haeGold">2%</strong></div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-haeGold/10 border border-haeGold/30 text-xs text-haeGold font-semibold text-center">
+                        Listing DEX/CEX Oficial: $0.035 USD
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. SOBRE EL TOKEN $HAE (Imagen 3) -->
-        <section id="token" class="max-w-7xl mx-auto px-4 space-y-12">
-            <div class="text-center max-w-3xl mx-auto space-y-3">
-                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🪙 Activo Soberano</span>
-                <h2 class="text-3xl sm:text-4xl font-black">Token HAE</h2>
-                <p class="text-slate-400">Más que una moneda, un puente financiero global.</p>
+        <!-- 5. ECOSISTEMA (IMAGEN 5) -->
+        <section id="ecosistema" class="max-w-6xl mx-auto px-4 space-y-10">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🌐 Herramientas del Ecosistema</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Ecosistema HAE</h2>
+                <p class="text-slate-400">Productos, servicios y tecnología descentralizada.</p>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6">
-                    <h3 class="text-xl font-bold text-haeGold">Información del Token</h3>
-                    <ul class="space-y-4 text-sm">
-                        <li class="flex justify-between pb-3 border-b border-haeBorder"><span class="text-slate-400">Nombre:</span> <span class="font-semibold">Hispania Aeterna</span></li>
-                        <li class="flex justify-between pb-3 border-b border-haeBorder"><span class="text-slate-400">Símbolo:</span> <span class="font-semibold">$HAE</span></li>
-                        <li class="flex justify-between pb-3 border-b border-haeBorder"><span class="text-slate-400">Blockchain:</span> <span class="font-semibold">Solana / Polygon / Arbitrum</span></li>
-                        <li class="flex justify-between"><span class="text-slate-400">Suministro total:</span> <span class="font-semibold">1,000,000,000 HAE</span></li>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-wallet text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Pay</h3><p class="text-xs text-slate-400">Pagos con criptomonedas rápidos y seguros.</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-store text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Business</h3><p class="text-xs text-slate-400">Plataforma integral para comercios.</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-shield-cat text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Wallet</h3><p class="text-xs text-slate-400">Tu billetera digital soberana y multicadena.</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-bag-shopping text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Store</h3><p class="text-xs text-slate-400">Tienda de servicios y productos globales.</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-graduation-cap text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Academy</h3><p class="text-xs text-slate-400">Educación financiera descentralizada.</p></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-3"><i class="fa-solid fa-chart-line text-2xl text-haeGold"></i><h3 class="font-bold text-white text-lg">HAE Analytics</h3><p class="text-xs text-slate-400">Datos y estadísticas del mercado en tiempo real.</p></div>
+            </div>
+        </section>
+
+        <!-- 6. COMERCIOS (IMAGEN 6) -->
+        <section id="comercios" class="max-w-6xl mx-auto px-4 space-y-10">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🤝 Red Comercial</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Comercios</h2>
+                <p class="text-slate-400">Acepta $HAE en tu negocio y expande tus horizontes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-haeCard p-8 rounded-3xl border border-haeBorder">
+                <form onsubmit="event.preventDefault(); alert('¡Solicitud de registro enviada con éxito!');" class="space-y-4 text-sm">
+                    <h3 class="font-bold text-lg text-white mb-2">Registra tu empresa</h3>
+                    <div><input type="text" placeholder="Nombre comercial" required class="w-full bg-slate-900 border border-haeBorder rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-haeGold"></div>
+                    <div><input type="text" placeholder="Razón social" required class="w-full bg-slate-900 border border-haeBorder rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-haeGold"></div>
+                    <div><input type="email" placeholder="Correo empresarial" required class="w-full bg-slate-900 border border-haeBorder rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-haeGold"></div>
+                    <button type="submit" class="w-full py-3 rounded-xl bg-haeGold text-haeDark font-bold hover:bg-haeGoldDark transition">Enviar solicitud</button>
+                </form>
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-white">Beneficios para tu negocio</h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Pagos rápidos y seguros</li>
+                        <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Menores comisiones financieras</li>
+                        <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Integración sencilla API/SDK</li>
+                        <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Visibilidad internacional</li>
                     </ul>
                 </div>
-                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6">
-                    <h3 class="text-xl font-bold text-haeGold">Características y Usos</h3>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><i class="fa-solid fa-network-wired text-haeGold mb-2"></i><h4 class="font-bold">Multicadena</h4></div>
-                        <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><i class="fa-solid fa-percent text-haeGold mb-2"></i><h4 class="font-bold">Bajas comisiones</h4></div>
-                        <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><i class="fa-solid fa-gauge-high text-haeGold mb-2"></i><h4 class="font-bold">Alta velocidad</h4></div>
-                        <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder"><i class="fa-solid fa-shield text-haeGold mb-2"></i><h4 class="font-bold">Seguridad</h4></div>
-                    </div>
+            </div>
+        </section>
+
+        <!-- 7. HAE BUSINESS (IMAGEN 7) -->
+        <section id="hae-business" class="max-w-6xl mx-auto px-4 space-y-10">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">📱 Aplicación Comercial</span>
+                <h2 class="text-3xl sm:text-4xl font-black">HAE Business</h2>
+                <p class="text-slate-400">La plataforma definitiva de pagos para tu negocio.</p>
+            </div>
+
+            <div class="p-8 sm:p-10 rounded-3xl bg-haeCard border border-haeBorder space-y-8 shadow-xl">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl bg-slate-900 border border-haeBorder"><span class="text-xs text-slate-400">Total transacciones</span><div class="text-2xl font-black text-haeGold mt-1">$ 12,450.00</div></div>
+                    <div class="p-5 rounded-2xl bg-slate-900 border border-haeBorder"><span class="text-xs text-slate-400">Transacciones hoy</span><div class="text-2xl font-black text-white mt-1">$ 2,340.00</div></div>
+                    <div class="p-5 rounded-2xl bg-slate-900 border border-haeBorder"><span class="text-xs text-slate-400">Comisión estimada</span><div class="text-2xl font-black text-white mt-1">$ 124.50</div></div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900 border border-haeBorder flex flex-wrap justify-around text-xs text-slate-400 gap-4">
+                    <span><i class="fa-solid fa-code text-haeGold mr-1"></i> API REST</span>
+                    <span><i class="fa-solid fa-box text-haeGold mr-1"></i> SDK</span>
+                    <span><i class="fa-solid fa-plug text-haeGold mr-1"></i> Plugins</span>
+                    <span><i class="fa-solid fa-webhook text-haeGold mr-1"></i> Webhooks</span>
                 </div>
             </div>
         </section>
 
-        <!-- 4. TOKENOMICS (Imagen 4) -->
-        <section id="tokenomics" class="max-w-7xl mx-auto px-4 space-y-12">
-            <div class="text-center max-w-3xl mx-auto space-y-3">
-                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">📊 Economía del Ecosistema</span>
-                <h2 class="text-3xl sm:text-4xl font-black">Tokenomics</h2>
-                <p class="text-slate-400">Distribución optimizada con Comunidad 60% y Tax del 6%.</p>
+        <!-- 8. MEMBRESÍA EMPRESARIAL (IMAGEN 8) -->
+        <section id="membresia" class="max-w-6xl mx-auto px-4 space-y-10">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">👑 Membresías Exclusivas</span>
+                <h2 class="text-3xl sm:text-4xl font-black">HAE Founding Merchant</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Distribución Actualizada (Comunidad 60%, Tesorería 15%, Equipo 10%, Desarrollo 7%, Marketing 5%, Liquidez 3%) -->
-                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6">
-                    <h3 class="text-xl font-bold text-haeGold">Distribución de Tokens (Supply Total: 1B)</h3>
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Comunidad</span> <strong class="text-haeGold">60% (600M HAE)</strong></div>
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Tesorería</span> <strong class="text-haeGold">15% (150M HAE)</strong></div>
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Equipo</span> <strong class="text-haeGold">10% (100M HAE)</strong></div>
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Desarrollo</span> <strong class="text-haeGold">7% (70M HAE)</strong></div>
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Marketing</span> <strong class="text-haeGold">5% (50M HAE)</strong></div>
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900 border border-haeBorder"><span>Liquidez</span> <strong class="text-haeGold">3%
+                <div class="p-8 rounded-3xl bg-haeCard border border-haeGold/40 space-y-6 shadow-2xl flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="px-3 py-1 bg-haeGold/20 text-haeGold text-xs font-bold rounded-full">Membresía Empresarial Fundadora</span>
+                        <div class="text-3xl font-black text-haeGold">US$ 5,000</div>
+                        <p class="text-slate-300 text-sm">Una oportunidad exclusiva para empresas que quieren ser parte del futuro financiero hispano.</p>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Incorporación prioritaria al ecosistema</li>
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Asistencia técnica para integrar pagos</li>
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Perfil empresarial destacado</li>
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Herramientas comerciales avanzadas</li>
+                        </ul>
+                    </div>
+                    <button onclick="alert('¡Solicitud de Founding Merchant enviada!');" class="w-full py-3 rounded-xl bg-haeGold text-haeDark font-bold hover:bg-haeGoldDark transition">Quiero ser Founding Merchant</button>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-haeCard border border-haeBorder space-y-6 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <span class="px-3 py-1 bg-slate-800 text-slate-300 text-xs font-bold rounded-full">Gratuito / Emprendedores</span>
+                        <div class="text-2xl font-black text-white">Comercios Pequeños</div>
+                        <p class="text-slate-400 text-sm">También puedes empezar gratis para pequeños comercios y emprendedores.</p>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Registro básico</li>
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Integración simple</li>
+                            <li><i class="fa-solid fa-check text-haeGold mr-2"></i> Soporte en línea</li>
+                        </ul>
+                    </div>
+                    <button onclick="alert('¡Registro básico iniciado!');" class="w-full py-3 rounded-xl border border-haeGold text-haeGold font-bold hover:bg-haeGold hover:text-haeDark transition">Registrarme Gratis</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAKING (Ya integrado de forma fluida) -->
+        <section id="staking" class="max-w-6xl mx-auto px-4 space-y-8">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🏦 Genera Rendimientos</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Staking Oficial de $HAE</h2>
+                <p class="text-slate-400">Bloquea tus tokens y obtén recompensas garantizadas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-4 text-center">
+                    <div class="text-haeGold font-black text-xl">0.5%</div>
+                    <h3 class="font-bold text-white text-base">1 Mes</h3>
+                    <button onclick="abrirStakingModal(1, 0.5)" class="w-full py-2.5 rounded-xl bg-slate-900 border border-haeGold text-haeGold font-bold text-xs hover:bg-haeGold hover:text-haeDark transition">Staking 1 Mes</button>
+                </div>
+                <div class="p-6 rounded-2xl bg-haeCard border-2 border-haeGold space-y-4 text-center">
+                    <div class="text-haeGold font-black text-xl">2%</div>
+                    <h3 class="font-bold text-white text-base">4 Meses</h3>
+                    <button onclick="abrirStakingModal(4, 2)" class="w-full py-2.5 rounded-xl bg-haeGold text-haeDark font-extrabold text-xs hover:opacity-90 transition">Staking 4 Meses</button>
+                </div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-4 text-center">
+                    <div class="text-haeGold font-black text-xl">3.5%</div>
+                    <h3 class="font-bold text-white text-base">8 Meses</h3>
+                    <button onclick="abrirStakingModal(8, 3.5)" class="w-full py-2.5 rounded-xl bg-slate-900 border border-haeGold text-haeGold font-bold text-xs hover:bg-haeGold hover:text-haeDark transition">Staking 8 Meses</button>
+                </div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-4 text-center">
+                    <div class="text-haeGold font-black text-xl">5%</div>
+                    <h3 class="font-bold text-white text-base">1 Año</h3>
+                    <button onclick="abrirStakingModal(12, 5)" class="w-full py-2.5 rounded-xl bg-slate-900 border border-haeGold text-haeGold font-bold text-xs hover:bg-haeGold hover:text-haeDark transition">Staking 1 Año</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. COMUNIDAD (IMAGEN 10 CON LINKS OFICIALES) -->
+        <section id="comunidad" class="max-w-6xl mx-auto px-4 space-y-10">
+            <div class="text-center space-y-3">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">🌍 Redes Oficiales</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Comunidad</h2>
+                <p class="text-slate-400">Únete, aprende y crece. Juntos somos más fuertes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="https://t.me/+um2WxKcaTCQyNjM5" target="_blank" class="p-6 rounded-2xl bg-haeCard border border-haeBorder hover:border-haeGold transition flex items-center space-x-4">
+                    <i class="fa-brands fa-telegram text-3xl text-haeGold"></i>
+                    <div><h4 class="font-bold text-white">Telegram</h4><p class="text-xs text-slate-400">Canal Oficial</p></div>
+                </a>
+                <a href="https://x.com/Hispanidadbnfj" target="_blank" class="p-6 rounded-2xl bg-haeCard border border-haeBorder hover:border-haeGold transition flex items-center space-x-4">
+                    <i class="fa-brands fa-x-twitter text-3xl text-haeGold"></i>
+                    <div><h4 class="font-bold text-white">X (Twitter)</h4><p class="text-xs text-slate-400">@Hispanidadbnfj</p></div>
+                </a>
+                <a href="https://www.tiktok.com/@hispanidad_cripto?_r=1&_t=ZS-99mJSuSJAU1" target="_blank" class="p-6 rounded-2xl bg-haeCard border border-haeBorder hover:border-haeGold transition flex items-center space-x-4">
+                    <i class="fa-brands fa-tiktok text-3xl text-haeGold"></i>
+                    <div><h4 class="font-bold text-white">TikTok</h4><p class="text-xs text-slate-400">@hispanidad_cripto</p></div>
+                </a>
+                <a href="https://www.facebook.com/share/1HmMj9MeNt/" target="_blank" class="p-6 rounded-2xl bg-haeCard border border-haeBorder hover:border-haeGold transition flex items-center space-x-4">
+                    <i class="fa-brands fa-facebook text-3xl text-haeGold"></i>
+                    <div><h4 class="font-bold text-white">Facebook</h4><p class="text-xs text-slate-400">Comunidad Hispana</p></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- DASHBOARD / BILLETERA DEL USUARIO -->
+        <section id="dashboard" class="max-w-6xl mx-auto px-4 space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-haeGold font-bold text-xs uppercase tracking-widest">💼 Panel de Control</span>
+                <h2 class="text-3xl sm:text-4xl font-black">Tu Billetera Personal $HAE</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-2"><span class="text-xs text-slate-400 uppercase font-bold">Balance HAE</span><div id="userHaeBalance" class="text-3xl font-black text-haeGold">0.00 HAE</div></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-2"><span class="text-xs text-slate-400 uppercase font-bold">Inversión Preventa</span><div id="userUsdInvested" class="text-3xl font-black text-white">$0.00 USD</div></div>
+                <div class="p-6 rounded-2xl bg-haeCard border border-haeBorder space-y-2"><span class="text-xs text-slate-400 uppercase font-bold">Tokens Staking</span><div id="userStakedBalance" class="text-3xl font-black text-haeGold">0.00 HAE</div></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL ZOOM IMAGEN -->
+    <div id="modalZoom" class="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 hidden" onclick="cerrarModalZoom()">
+        <div class="relative max-w-2xl w-full text-center">
+            <button onclick="cerrarModalZoom()" class="absolute -top-10 right-0 text-white text-3xl font-bold hover:text-haeGold">&times;</button>
+            <img id="imgModalAmpliada" src="" alt="Moneda Ampliada" class="max-h-[80vh] mx-auto rounded-full border-4 border-haeGold shadow-2xl animate-pulse">
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-haeDark border-t border-haeBorder py-12 px-4 text-center text-xs text-slate-500 space-y-4">
+        <p>© 2026 Hispania Aeterna ($HAE). ¡Por la unidad, la prosperidad y la eternidad de la Hispanidad! ⚔️🌎</p>
+    </footer>
+
+    <script>
+        const etapasData = [
+            { id: 1, precio: 0.005, meta: 30000, recaudado: 18450, nombre: "Etapa 1 (Fundadores)" },
+            { id: 2, precio: 0.008, meta: 40000, recaudado: 0, nombre: "Etapa 2" },
+            { id: 3, precio: 0.012, meta: 30000, recaudado: 0, nombre: "Etapa 3" },
+            { id: 4, precio: 0.018, meta: 28000, recaudado: 0, nombre: "Etapa 4" },
+            { id: 5, precio: 0.025, meta: 25000, recaudado: 0, nombre: "Etapa 5" }
+        ];
+
+        let monedaSeleccionada = 'SOL';
+        let userWalletAddress = null;
+        let userBalanceHAE = 0;
+        let userUsdTotal = 0;
+
+        const walletsOficiales = {
+            'SOL': '6xtGMjEB6amj9skvBtBTRTdCnyAidcefWeFneAHX7NX8',
+            'ETH': '0x4745098d68E495bDe991DFeB5a6b6121EC602277',
+            'BNB': '0x4745098d68E495bDe991DFeB5a6b6121EC602277'
+        };
+
+        function abrirModalZoom(src) {
+            document.getElementById('imgModalAmpliada').src = src;
+            document.getElementById('modalZoom').classList.remove('hidden');
+        }
+
+        function cerrarModalZoom() {
+            document.getElementById('modalZoom').classList.add('hidden');
+        }
+
+        function renderEtapas() {
+            const container = document.getElementById('etapasContainer');
+            container.innerHTML = '';
+            etapasData.forEach(etapa => {
+                const porcentaje = Math.min(100, Math.round((etapa.recaudado / etapa.meta) * 100));
+                const esActiva = etapa.recaudado < etapa.meta && (etapa.id === 1 || etapasData[etapa.id-2].recaudado >= etapasData[etapa.id-2].meta);
+                
+                container.innerHTML += `
+                    <div class="p-5 rounded-2xl bg-haeCard border ${esActiva ? 'border-2 border-haeGold shadow-lg shadow-haeGold/20' : 'border-haeBorder'} relative overflow-hidden flex flex-col justify-between space-y-4">
+                        ${esActiva ? '<span class="absolute top-0 right-0 bg-haeGold text-haeDark text-[9px] font-black px-2.5 py-0.5 rounded-bl">ACTIVA</span>' : ''}
+                        <div>
+                            <div class="text-xs font-bold text-haeGold">Etapa ${etapa.id}</div>
+                            <h4 class="font-extrabold text-sm text-white mt-0.5">${etapa.nombre}</h4>
+                            <div class="text-lg font-black text-white mt-2">$${etapa.precio} USD</div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-[11px] text-slate-400">
+                                <span>Progreso</span>
+                                <span class="font-bold text-white">${porcentaje}%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-haeBorder">
+                                <div class="bg-haeGold h-full rounded-full transition-all duration-500" style="width: ${porcentaje}%"></div>
+                            </div>
+                            <div class="text-[10px] text-slate-500 text-right">Meta: $${etapa.meta.toLocaleString()}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function actualizarCalculadora() {
+            const stageId = parseInt(document.getElementById('selectedStage').value);
+            const etapaObj = etapasData.find(e => e.id === stageId);
+            const monto = parseFloat(document.getElementById('invertInput').value) || 0;
+            const tokens = monto / etapaObj.precio;
+            document.getElementById('tokensCalculadosResult').innerText = tokens.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " HAE";
+        }
+
+        function seleccionarMonedaPago(moneda) {
+            monedaSeleccionada = moneda;
+            ['SOL', 'ETH', 'BNB'].forEach(m => {
+                const btn = document.getElementById(`btn${m}`);
+                if(m === moneda) {
+                    btn.classList.add('border-haeGold', 'text-white');
+                    btn.classList.remove('border-haeBorder', 'text-slate-400');
+                } else {
+                    btn.classList.remove('border-haeGold', 'text-white');
+                    btn.classList.add('border-haeBorder', 'text-slate-400');
+                }
+            });
+            document.getElementById('walletDestinoLabel').innerText = walletsOficiales[moneda];
+        }
+
+        async function conectarBilletera() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userWalletAddress = accounts[0];
+                    const shortAddr = userWalletAddress.substring(0, 6) + '...' + userWalletAddress.substring(userWalletAddress.length - 4);
+                    document.getElementById('walletBtnText').innerText = shortAddr;
+                    document.getElementById('userConnectedWallet').innerText = userWalletAddress;
+                    alert('¡Billetera Web3 conectada con éxito!');
+                } catch (error) {
+                    alert('Error al conectar la billetera.');
+                }
+            } else {
+                alert('Simulando conexión Web3 estándar...');
+                userWalletAddress = "0x4745...0227";
+                document.getElementById('walletBtnText').innerText = "Conectado";
+                document.getElementById('userConnectedWallet').innerText = userWalletAddress;
+            }
+        }
+
+        function procesarCompraPresale() {
+            const monto = parseFloat(document.getElementById('invertInput').value) || 0;
+            if(monto < 10 || monto > 5000) {
+                alert('El monto debe estar entre $10 y $5,000 USD.');
+                return;
+            }
+            const stageId = parseInt(document.getElementById('selectedStage').value);
+            const etapaObj = etapasData.find(e => e.id === stageId);
+            const tokensComprados = monto / etapaObj.precio;
+
+            etapaObj.recaudado += monto;
+            userBalanceHAE += tokensComprados;
+            userUsdTotal += monto;
+
+            document.getElementById('userHaeBalance').innerText = userBalanceHAE.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + " HAE";
+            document.getElementById('userUsdInvested').innerText = "$" + userUsdTotal.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + " USD";
+
+            renderEtapas();
+            alert(`¡Compra exitosa! Has adquirido ${tokensComprados.toLocaleString()} tokens $HAE.`);
+        }
+
+        function abrirStakingModal(meses, tasa) {
+            const cantidadStaking = prompt(`¿Cuántos tokens $HAE deseas poner en Staking por ${meses} meses (${tasa}% rendimiento)?`, "1000");
+            if(cantidadStaking) {
+                const num = parseFloat(cantidadStaking);
+                if(num > userBalanceHAE) {
+                    alert('No tienes suficientes tokens disponibles en tu balance.');
+                    return;
+                }
+                userBalanceHAE -= num;
+                const stakedElem = document.getElementById('userStakedBalance');
+                const actualStaked = parseFloat(stakedElem.innerText) || 0;
+                stakedElem.innerText = (actualStaked + num).toLocaleString('en-US', {minimumFractionDigits:2}) + " HAE";
+                document.getElementById('userHaeBalance').innerText = userBalanceHAE.toLocaleString('en-US', {minimumFractionDigits:2}) + " HAE";
+                alert(`¡Staking exitoso de ${num} HAE por ${meses} meses!`);
+            }
+        }
+
+        window.onload = () => {
+            renderEtapas();
+            actualizarCalculadora();
+        };
+    </script>
+</body>
+</html>
